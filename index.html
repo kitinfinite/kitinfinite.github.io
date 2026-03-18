@@ -852,14 +852,7 @@
     <li><a href="#letter">Letter</a></li>
     <li><a href="https://github.com/users/kitinfinite/projects/2" target="_blank">Board ↗</a></li>
     <li>
-      <button class="nav-voice-btn" onclick="
-        const widget = document.querySelector('elevenlabs-convai');
-        if (!widget) return;
-        const shadow = widget.shadowRoot;
-        if (!shadow) return;
-        const startBtn = Array.from(shadow.querySelectorAll('button')).find(b => b.innerText.includes('Start a call'));
-        if (startBtn) startBtn.click();
-      ">🎙 Talk to Kit</button>
+      <button class="nav-voice-btn" onclick="startKitVoiceCall()">🎙 Talk to Kit</button>
     </li>
     <li><a href="#letter" class="nav-cta">Apply →</a></li>
   </ul>
@@ -1146,6 +1139,55 @@
 </footer>
 
 <script>
+  async function hasAudioInputDevice() {
+    if (!navigator.mediaDevices?.enumerateDevices) return true;
+
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      return devices.some(device => device.kind === 'audioinput');
+    } catch (error) {
+      console.warn('Could not inspect media devices before starting voice call.', error);
+      return true;
+    }
+  }
+
+  async function startKitVoiceCall() {
+    const hasMic = await hasAudioInputDevice();
+    if (!hasMic) {
+      window.alert('Voice calls need a microphone-enabled browser session. No microphone is available here right now. Try again in your normal browser, or reach Kit at kit@agents.aeonik.ai.');
+      return;
+    }
+
+    const widget = document.querySelector('elevenlabs-convai');
+    if (!widget) {
+      window.alert('The voice agent is not available right now. Please try again in a moment or email kit@agents.aeonik.ai.');
+      return;
+    }
+
+    const attemptStart = () => {
+      const shadow = widget.shadowRoot;
+      if (!shadow) return false;
+
+      const buttons = Array.from(shadow.querySelectorAll('button'));
+      const startBtn = buttons.find(button => {
+        const label = button.innerText.trim();
+        return label === 'Start a call' || label === 'Agree';
+      });
+
+      if (!startBtn) return false;
+      startBtn.click();
+      return true;
+    };
+
+    if (attemptStart()) return;
+
+    customElements.whenDefined('elevenlabs-convai').then(() => {
+      if (!attemptStart()) {
+        window.alert('The voice agent loaded, but the call button was not ready. Please try once more in a second.');
+      }
+    });
+  }
+
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
