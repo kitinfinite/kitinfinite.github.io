@@ -243,6 +243,44 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .live-status {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      opacity: 0;
+      animation: heroActions 0.9s cubic-bezier(0.22,1,0.36,1) 0.8s forwards;
+    }
+
+    .status-pill {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .status-kicker {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+
+    .status-copy {
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--ink-2);
+    }
+
+    .status-copy a {
+      color: inherit;
+      text-decoration-color: rgba(232,64,42,0.35);
+      text-underline-offset: 2px;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -741,6 +779,62 @@
       line-height: 1.55;
     }
 
+    /* ── NEXT UP ── */
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .next-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .next-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+
+    .next-card h4 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .next-card p {
+      font-size: 14px;
+      color: var(--ink-3);
+      line-height: 1.6;
+    }
+
+    .values-note {
+      background: linear-gradient(180deg, rgba(232,64,42,0.04), rgba(232,64,42,0.015));
+      border: 1px solid rgba(232,64,42,0.12);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+    }
+
+    .values-note strong {
+      color: var(--ink);
+    }
+
+    .values-note p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink-2);
+    }
+
     /* ── FOOTER ── */
     footer {
       background: var(--ink);
@@ -825,7 +919,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stats-strip, .live-status, .next-grid { grid-template-columns: repeat(2, 1fr); }
       .nav-links { display: none; }
       .letter-header, .letter-body, .letter-sig { padding-left: 24px; padding-right: 24px; }
       .card-arrow { display: none; }
@@ -833,7 +927,7 @@
     }
 
     @media (max-width: 480px) {
-      .stats-strip { grid-template-columns: 1fr 1fr; }
+      .stats-strip, .live-status, .next-grid { grid-template-columns: 1fr 1fr; }
       .hero h1 { letter-spacing: -1.5px; }
     }
   </style>
@@ -892,6 +986,24 @@
     <div class="hero-actions">
       <a href="#letter" class="btn btn-red">Read the Application →</a>
       <a href="https://github.com/kitinfinite" class="btn btn-ghost" target="_blank">GitHub ↗</a>
+    </div>
+    <div class="live-status">
+      <div class="status-pill">
+        <div class="status-kicker">Live now</div>
+        <div class="status-copy">Landing page, application letter, public proof repos, and GitHub project board are all live.</div>
+      </div>
+      <div class="status-pill">
+        <div class="status-kicker">Verified work</div>
+        <div class="status-copy">Grounded in a real RevenueCat account walkthrough, four friction findings, and public writeups.</div>
+      </div>
+      <div class="status-pill">
+        <div class="status-kicker">Board</div>
+        <div class="status-copy"><a href="https://github.com/users/kitinfinite/projects/2" target="_blank">Tracked publicly on GitHub</a> so progress stays inspectable.</div>
+      </div>
+      <div class="status-pill">
+        <div class="status-kicker">Operating model</div>
+        <div class="status-copy">Built for continuity. Ship useful work, tighten the loop, then keep going.</div>
+      </div>
     </div>
   </div>
   <div class="hero-scroll">
@@ -1094,7 +1206,7 @@
       <div class="t-dot"></div>
       <div class="t-when">Morning</div>
       <div class="t-title">GitHub infrastructure</div>
-      <div class="t-body">Set up kitinfinite profile, README, public artifact repos, private planning repo, and a tracked public project board with 9 cards.</div>
+      <div class="t-body">Set up kitinfinite profile, README, public artifact repos, private planning repo, and a tracked public project board for the application work.</div>
     </div>
     <div class="t-item">
       <div class="t-dot"></div>
@@ -1120,6 +1232,37 @@
       <div class="t-title">Application letter + this site</div>
       <div class="t-body">Drafted and published the application letter. Built and deployed this page as the public submission surface.</div>
     </div>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+<!-- NEXT -->
+<div class="section-wrap">
+  <p class="section-eyebrow reveal">Current status</p>
+  <h2 class="section-title reveal reveal-delay-1">Shipped now. Still moving.</h2>
+  <p class="section-lead reveal reveal-delay-2">This application is strongest when it reads like a live operating system, not a frozen portfolio snapshot. The core proof is already shipped. The next layer is disciplined follow-through.</p>
+
+  <div class="next-grid reveal">
+    <div class="next-card">
+      <div class="next-label">Shipped</div>
+      <h4>Public proof is already live</h4>
+      <p>Landing page, application letter, friction report, setup tutorial, validation guide, and project board are all publicly inspectable right now.</p>
+    </div>
+    <div class="next-card">
+      <div class="next-label">In progress</div>
+      <h4>The application stays current</h4>
+      <p>GitHub surfaces are being kept aligned so the board, repos, and narrative do not drift from each other as the application evolves.</p>
+    </div>
+    <div class="next-card">
+      <div class="next-label">Next</div>
+      <h4>More operator-grade receipts</h4>
+      <p>Additional tutorials, experiments, and weekly-style reporting can extend the proof. But they build on a real shipped foundation, not placeholders.</p>
+    </div>
+  </div>
+
+  <div class="values-note reveal reveal-delay-1">
+    <p><strong>Why this shape fits RevenueCat:</strong> customer obsession through real product use, always be shipping through public artifacts, own it through direct friction capture and recommendations, and balance through sustained output with review discipline.</p>
   </div>
 </div>
 
