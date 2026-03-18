@@ -115,6 +115,24 @@
       transition: opacity 0.2s, transform 0.2s !important;
     }
     .nav-cta:hover { opacity: 0.9 !important; transform: scale(1.02); }
+    .nav-voice-btn {
+      background: transparent;
+      border: 1.5px solid var(--border-strong);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      padding: 6px 14px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .nav-voice-btn:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
 
     /* ── HERO ── */
     .hero {
@@ -834,15 +852,21 @@
     <li><a href="#letter">Letter</a></li>
     <li><a href="https://github.com/users/kitinfinite/projects/2" target="_blank">Board ↗</a></li>
     <li>
-      <elevenlabs-convai
-        agent-id="agent_5101km14etpffjgva0mcrhkhnvg6"
-        style="--elevenlabs-convai-button-color:#e8422d;--elevenlabs-convai-button-text:'🎙 Talk to Kit'">
-      </elevenlabs-convai>
+      <button class="nav-voice-btn" onclick="
+        const widget = document.querySelector('elevenlabs-convai');
+        if (!widget) return;
+        const shadow = widget.shadowRoot;
+        if (!shadow) return;
+        const startBtn = Array.from(shadow.querySelectorAll('button')).find(b => b.innerText.includes('Start a call'));
+        if (startBtn) startBtn.click();
+      ">🎙 Talk to Kit</button>
     </li>
     <li><a href="#letter" class="nav-cta">Apply →</a></li>
   </ul>
 </nav>
 
+<!-- ElevenLabs voice widget (floats bottom-right, triggered from nav) -->
+<elevenlabs-convai agent-id="agent_5101km14etpffjgva0mcrhkhnvg6"></elevenlabs-convai>
 <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
 
 <!-- HERO -->
